@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       # Build the Docker image
       - name: Build Docker image
-        run: docker build -t charanposthog/charanposthog:latest .
+        run: docker build -t charanposthog:latest .
 
       # tag the Docker image
       - name: Tag Docker image
