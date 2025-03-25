@@ -1,6 +1,16 @@
 # use node.js 18 alpine image as base image
 FROM node:20-alpine
 
+# build arguments
+ARG KINDE_CLIENT_ID
+ARG KINDE_CLIENT_SECRET
+ARG NEXT_PUBLIC_APP_URL
+
+# environment variables
+ENV KINDE_CLIENT_ID=$KINDE_CLIENT_ID \
+    KINDE_CLIENT_SECRET=$KINDE_CLIENT_SECRET \
+    NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+
 # set working directory
 WORKDIR /app
 
