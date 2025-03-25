@@ -1,0 +1,25 @@
+{
+    "routes": [
+      {
+        "route": "/login",
+        "allowedRoles": ["authenticated"]
+      }
+    ],
+    "auth": {
+      "identityProviders": {
+        "github": {
+          "registration": {
+            "clientIdSettingName": "Ov23lizUJGMM7nbUrktJ",
+            "clientSecretSettingName": "02dc3f8866c8fc08e97fd714fcbb032da4ab526a"
+          }
+        },
+        "google": {
+          "registration": {
+            "clientIdSettingName": "GOOGLE_CLIENT_ID",
+            "clientSecretSettingName": "GOOGLE_CLIENT_SECRET"
+          }
+        }
+      }
+    }
+  }
+  
