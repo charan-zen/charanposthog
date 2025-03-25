@@ -47,7 +47,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       # Deploy to Azure Container Apps
       - name: Deploy to Azure Container Apps
-        uses: azure/container-apps-deploy-action@v0
+        uses: azure/container-apps-deploy-action@v1
         with:
           containerAppName: ${{ vars.CONTAINER_APP_NAME }}
+          resourceGroup: ZenPOC
           imageToDeploy: docker.io/${{ secrets.DOCKER_USERNAME }}/charanposthog:${{ github.sha }}
+          containerAppEnvironment: charanzenpoc
