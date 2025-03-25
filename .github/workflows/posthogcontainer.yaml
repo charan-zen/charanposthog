@@ -20,7 +20,17 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          password:
+            ${{ secrets.DOCKER_PASSWORD }}
+
+            # Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg KINDE_CLIENT_ID="57ca032eb46d4594a0fc6b3f0e7a9304" \
+            --build-arg KINDE_CLIENT_SECRET="clw0pkuWTb6b7GmIiGbO3lOtBdHWWNIHi238MNSAVGfNdhUPWMi" \
+            --build-arg NEXT_PUBLIC_APP_URL="https://charanzencon.ashymeadow-dd775b15.centralindia.azurecontainerapps.io" \
+            -t ${{ secrets.DOCKER_USERNAME }}/charanposthog:${{ github.sha }} .
 
       # tag the Docker image
       - name: Tag Docker image
@@ -29,15 +39,6 @@ jobs:
         # Push the Docker image
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/charanposthog:${{ github.sha }}
-
-        # Build the Docker image
-      - name: Build Docker image
-        run: |
-          docker build \
-            --build-arg KINDE_CLIENT_ID="57ca032eb46d4594a0fc6b3f0e7a9304" \
-            --build-arg KINDE_CLIENT_SECRET="clw0pkuWTb6b7GmIiGbO3lOtBdHWWNIHi238MNSAVGfNdhUPWMi" \
-            --build-arg NEXT_PUBLIC_APP_URL="https://charanzencon.ashymeadow-dd775b15.centralindia.azurecontainerapps.io" \
-            -t ${{ secrets.DOCKER_USERNAME }}/charanposthog:${{ github.sha }} .
 
         # Log in to Azure
       - name: Log in to Azure
