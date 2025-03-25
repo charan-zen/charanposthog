@@ -30,7 +30,7 @@ jobs:
             --build-arg KINDE_CLIENT_ID="57ca032eb46d4594a0fc6b3f0e7a9304" \
             --build-arg KINDE_CLIENT_SECRET="clw0pkuWTb6b7GmIiGbO3lOtBdHWWNIHi238MNSAVGfNdhUPWMi" \
             --build-arg NEXT_PUBLIC_APP_URL="https://charanzencon.ashymeadow-dd775b15.centralindia.azurecontainerapps.io" \
-            -t ${{ secrets.DOCKER_USERNAME }}/charanposthog:${{ github.sha }} .
+            -t charanposthog:latest .
 
       # tag the Docker image
       - name: Tag Docker image
