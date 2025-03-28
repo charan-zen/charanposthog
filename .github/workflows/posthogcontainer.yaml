@@ -50,6 +50,6 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           containerAppName: ${{ vars.CONTAINER_APP_NAME }}
-          resourceGroup: ZenPOC
+          resourceGroup: Charansai
           imageToDeploy: docker.io/${{ secrets.DOCKER_USERNAME }}/charanposthog:${{ github.sha }}
           containerAppEnvironment: charanzenpoc
