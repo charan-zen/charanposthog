@@ -1,47 +1,24 @@
-# use node.js 18 alpine image as base image
-FROM node:20-alpine
+# stage 1
 
-# build arguments
-ARG KINDE_CLIENT_ID
-ARG KINDE_CLIENT_SECRET
-ARG NEXT_PUBLIC_APP_URL
-
-# environment variables
-ENV KINDE_CLIENT_ID=$KINDE_CLIENT_ID \
-    KINDE_CLIENT_SECRET=$KINDE_CLIENT_SECRET \
-    NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
-
-# set working directory
+# use nodejs alpine image as base image
+FROM node:22-alpine as build
+# set the working directory to /app 
 WORKDIR /app
-
-# copy package.json and package-lock.json
+# copy package.json and lock.json files
 COPY package*.json ./
-
 # install dependencies
 RUN npm install
-
-# copy all the application code
+# copy all files to the working directory
 COPY . .
-
-# build the application
+# build the app
 RUN npm run build
+# prod stage 2
+# use nginx alpine image as base image
+FROM nginx:stable-alpine AS production
 
-# # use lightweight node.js 18 alpine image as base image
-# FROM node:20-alpine
-
-# # set working directory
-# WORKDIR /app
-
-# # copy package.json and package-lock.json
-# COPY --from=builder /app/build ./build
-
-# # install only production dependencies
-# COPY package*.json ./
-# RUN npm install --only=production --legacy-peer-deps
-
-
-# expose port 3000
-EXPOSE 3000
-
-# start the application
-CMD ["npm", "run", "start"]
+# copy the build files from the previous stage to the nginx html directory
+COPY --from=build /app/build /usr/share/nginx/html
+# Expose port 80
+EXPOSE 80
+# cmd -g for serve global daemon meens not run background
+CMD [ "nginx", "-g", "daemon off;" ]
